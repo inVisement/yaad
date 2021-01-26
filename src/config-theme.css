@@ -1,0 +1,18 @@
+@import url('https://fonts.googleapis.com/css?family=Lato&family=Fira+Mono&display=swap');
+
+
+:root{
+	--hue: 300;
+	--saturation: 75%;
+
+	--main-color: black;
+
+	--font-size: calc(0.5em + 1vmin);
+	--main-font: Lato;
+	--max-width: 55em;
+	--line-height: 2em;
+	--code-font: "Fira Mono";
+	--input-width: 8em;
+}
+
+

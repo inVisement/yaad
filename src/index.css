@@ -1,0 +1,154 @@
+
+@import url('./config-theme.css');
+
+:root{
+	
+	--background-color: hsl(calc(120 + var(--hue)), var(--saturation), 98%);
+	--highlighter: hsl(var(--hue), var(--saturation), 98%);
+
+	--popup-color: hsl(var(--hue), var(--saturation), 100%);
+
+	--accent-color: hsl(var(--hue), var(--saturation), 50%);
+	--text-color: hsl(var(--hue), var(--saturation), 25%);
+}
+
+.api{
+	border: thin outset;
+}
+
+#api-fetcher {
+	position: fixed;
+	max-width: var(--max-width);
+	border: solid;
+	background-color: var(--popup-color);
+}
+
+
+#api-fetcher>*{
+	margin: 1em;
+}
+
+
+h1 {
+	border-bottom: solid thin var(--accent-color);
+}
+
+input:required {
+	border-color: var(--highlighter);
+}
+
+mark {
+	background-color: var(--highlighter);
+}
+
+button {
+	font-size: medium;
+	border: var(--highlighter) outset;
+	background-color: var(--highlighter);
+	margin: 0 .5em;
+	padding: .5em;
+}
+
+
+html {
+	font-size: var(--font-size);
+	background-color: var(--background-color);
+	font-family: var(--main-font) !important;
+	color: var(--main-color);
+}
+
+
+body {
+	line-height: var(--line-height);
+	margin: auto;
+	padding: 1em;
+	max-width: var(--max-width);
+}
+
+markdown {
+	color: var(--text-color);
+}
+
+
+ul {
+	padding-left: 1.5em;
+}
+
+
+fieldset>label {
+	display: inline-flex;
+	flex-direction: column;
+	max-width: var(--input-width);
+	margin: 0.5em 1em;
+	color: var(--accent-color); 
+}
+
+label>input {
+	width: 100%;
+}
+
+label {
+	color: var(--accent-color)
+}
+
+
+menu {
+	display: flex;
+	justify-content: center;
+}
+
+
+fieldset {
+	border: outset thin;
+}
+
+form input {
+	max-width: var(--input-width);
+}
+
+
+code {
+	font-family: var(--code-font) !important;
+	word-break: break-all !important;
+}
+
+
+h1 {
+	text-align: center;
+	font-size: larger;
+}
+
+h2,h3 {
+	font-size: larger;
+}
+
+h2, h3, h4, h5, h6, p {
+	display: inline;
+}
+
+h2::before, h3::before, h4::before, h5::before, h6::before {
+	content: "\a";
+	white-space: pre;
+}
+
+icon {
+	padding-left: 5px;
+	padding-right: 5px;
+	margin: 0;
+	font-size: larger;
+}
+
+icon:hover {
+	cursor: pointer;
+}
+
+a {
+	text-decoration: none;
+	background-color: var(--highlighter);
+	cursor: pointer;
+}
+
+code {
+	background-color: var(--highlighter);
+}
+
