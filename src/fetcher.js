@@ -1,16 +1,10 @@
 
-export {Vue, apiClass, apiFetcher}
 
 import Vue from 'https://unpkg.com/vue@2.6.0/dist/vue.esm.browser.min.js';
 
 
-const apiClass = 'api'
-
-//export const vm = new Vue({
-//	el: '#api-fetcher',
-
-const template = `
-<div id="api-fetcher" v-if="display">
+const apiFetcherDialog = `
+<modal id="api-fetcher" v-if="display">
 <h1>API Fetcher</h1>
 <form id="path">
 	<select name="selectedMethod">
@@ -18,7 +12,7 @@ const template = `
 	</select>
 	<label v-for="item in path">
 		{{item.label}}
-		<input 
+		<input v-if="item.input" 
 			v-bind:name="item.label" 
 			v-bind:type="item.type || 'text'" 
 			v-bind:placeholder="item.input"
@@ -62,32 +56,33 @@ const template = `
 	<button @click="close">Close</button>
 </menu>
 <mark>Open console (ctr+shift+J) to interact and see the <code>result</code></mark>
-</div>
-
-`
+</modal>`
 
 
-const apiFetcher = Vue.extend({
-	template: template,
+const apiFetcher = new Vue({
+	el: 'api-fetcher',
+	template: apiFetcherDialog,
 	data: function(){
 		return{
-			METHODS: ['GET', 'POST', 'DELETE', 'PATCH', 'PUT', 'HEAD', 'OPTIONS'],
 			display: false,
-			api: "",
-			methods: [],
-			pathString: "",
-			queryString: "",
-			bodyString: "",
+			data_attributes: {
+				is_api: false,
+				methods: "",
+				api: "",
+				path_string: "",
+				query_string: "",
+				body_string: "",
+			},
 		}
 	},
 	computed: {
-		baseUrl: function() {
-			return window.baseUrl || window.location.origin
+		methods: function() {
+			return this.data_attributes.methods.split(',')
 		},
 		path: function() {
-			// add baseUrl to pathString if needed, split by curly brackets, push {label, input} to path
+			// split by curly brackets, push {label, input} to path
 			let path=[]
-			let pathParts = this.pathString.split(/{|}/).filter(x=>x!="")
+			let pathParts = this.data_attributes.path_string.split(/{|}/).filter(x=>x!="")
 			for (let i=0; i<pathParts.length; i += 2) {
 				let label = pathParts[i]
 				let input = pathParts[i+1]
@@ -97,11 +92,11 @@ const apiFetcher = Vue.extend({
 		},
 		query: function() {
 			let query = []
-			if (this.queryString) {
+			if (this.data_attributes.query_string) {
 				// parse query params
-				let requiredParams = this.queryString.split('&').filter(x=>x.endsWith('=')).map(x=>x.slice(0,-1))
+				let requiredParams = this.data_attributes.query_string.split('&').filter(x=>x.endsWith('=')).map(x=>x.slice(0,-1))
 				
-				for (let [label_,input] of new URLSearchParams(this.queryString)) {
+				for (let [label_,input] of new URLSearchParams(this.data_attributes.query_string)) {
 					let [label, type] = label_.split(':',2)
 					query.push({
 						label,
@@ -115,11 +110,11 @@ const apiFetcher = Vue.extend({
 		},
 		body: function() {
 			let body = []
-			if (this.bodyString) {
+			if (this.data_attributes.body_string) {
 				// parse body params
-				let requiredParams = this.bodyString.split('&').filter(x=>x.endsWith('=')).map(x=>x.slice(0,-1))
+				let requiredParams = this.data_attributes.body_string.split('&').filter(x=>x.endsWith('=')).map(x=>x.slice(0,-1))
 		
-				for (let [label_,input] of new URLSearchParams(this.bodyString)) {
+				for (let [label_,input] of new URLSearchParams(this.data_attributes.body_string)) {
 					let [label, type] = label_.split(':',2)
 					body.push({
 						label,
@@ -133,7 +128,7 @@ const apiFetcher = Vue.extend({
 		
 		},
 		apiResult: async function() {
-			let res = await this.fetch(this.methods, this.url)
+			let res = await this.fetch(this.api.methods, this.url)
 			
 			let result = await res.json().catch(err=>res.text()).catch(err=>{
 				downloadResult(res)
@@ -145,42 +140,6 @@ const apiFetcher = Vue.extend({
 		},
 	},
 	methods: {
-		setupAPI(el){
-			// find API calls, and assign .trigger class
-			const content = el.textContent
-			const methodIndex = content.search(/ |[/]|http/)
-			var methods, api;
-			// extract methods
-			if (methodIndex==0) {//method not found
-				methods = 'GET'
-			} else {
-				methods = content.slice(0, methodIndex).toUpperCase().replace(/\s/g, '').split(',')
-				if (! (methods.every(method => this.METHODS.includes(method)))) {
-					//console.log('this is not an API call', content)
-					return
-				}
-			}
-			// if starts with http or /, it is an api call, assign method and url attributes
-			api = content.slice(methodIndex).trim()
-			if (api.startsWith('/')) {
-				api = this.baseUrl+api
-			} else if (!api.startsWith('http')) {
-				return
-			}
-
-			// config api parameters
-			el.classList.add(apiClass)
-			el.addEventListener('click', ()=>{
-				this.api = api
-				this.methods = methods
-
-				let [pathString, queryString, bodyString] = api.split('?')
-				this.pathString = pathString.startsWith('http')? pathString : this.baseUrl + pathString 
-				this.queryString = queryString
-				this.bodyString = bodyString
-				this.display = true
-			})
-		},
 		async fetch() {
 			// extract method from path form
 			let pathForm = this.$el.querySelector("#path")
@@ -235,5 +194,42 @@ const apiFetcher = Vue.extend({
 		close() {
 			this.display = false
 		},
+		open(data_attributes) {
+			this.data_attributes = data_attributes
+			this.display = true
+		}
 	}
 })
+
+
+export function parseFetcher(el, baseUrl=window.location.origin){
+	const apiStarters = ['http', '/'] 
+	const METHODS = ['GET', 'POST', 'DELETE', 'PATCH', 'PUT', 'HEAD', 'OPTIONS']
+	const content = el.textContent
+	
+	// extract methods
+	const methodIndex = content.search(/ |[/]|http/)
+	const methods = methodIndex==0 ? 'GET' : content.slice(0, methodIndex).toUpperCase()
+	var api = content.slice(methodIndex).trim()
+
+	const is_api = methods.split(',').every(method => METHODS.includes(method)) && apiStarters.some(starter => api.startsWith(starter))
+	
+	if (!is_api) return
+
+	api = api.startsWith('http') ? api : baseUrl+api
+	let [path_string, query_string, body_string] = api.split('?')
+	
+	// assign to el's data attributes
+	const data_attributes = {is_api, methods, api, path_string, query_string, body_string} 
+	for (let attr in data_attributes) {
+		el.dataset[attr] = data_attributes[attr]
+	} 
+
+	el.style.border = "thin outset"
+
+	el.addEventListener('click', () => {
+		apiFetcher.open(el.dataset)
+	})
+	
+}
+

@@ -1,60 +1,35 @@
-
-@import url('./config-theme.css');
-
+  
 :root{
-	
-	--background-color: hsl(calc(120 + var(--hue)), var(--saturation), 98%);
-	--highlighter: hsl(var(--hue), var(--saturation), 98%);
+	--hue: 240;
+	--saturation: 75%;
 
-	--popup-color: hsl(var(--hue), var(--saturation), 100%);
+	--font-size: calc(0.5em + 1vmin);
+	--main-font: 'sans-serif';
+	--max-width: 55em;
+	--line-height: 2em;
+	--code-font: 'monospace';
+	--input-width: 8em;
+}
 
+
+:root{	
+	--background-color: hsl(calc(180 + var(--hue)), 100%, 100%);
+	--highlighter: hsl(calc(180 + var(--hue)), 100%, 95%);
+	--popup-color: hsl(calc(180 + var(--hue)), 100%, 98%);
+
+	--main-color: hsl(var(--hue), var(--saturation), 25%);
 	--accent-color: hsl(var(--hue), var(--saturation), 50%);
-	--text-color: hsl(var(--hue), var(--saturation), 25%);
 }
 
-.api{
-	border: thin outset;
-}
-
-#api-fetcher {
-	position: fixed;
-	max-width: var(--max-width);
-	border: solid;
-	background-color: var(--popup-color);
-}
-
-
-#api-fetcher>*{
-	margin: 1em;
-}
-
-
-h1 {
-	border-bottom: solid thin var(--accent-color);
-}
-
-input:required {
-	border-color: var(--highlighter);
-}
-
-mark {
-	background-color: var(--highlighter);
-}
-
-button {
-	font-size: medium;
-	border: var(--highlighter) outset;
-	background-color: var(--highlighter);
-	margin: 0 .5em;
-	padding: .5em;
+summary>* {
+	display: inline-block;
 }
 
 
 html {
 	font-size: var(--font-size);
 	background-color: var(--background-color);
-	font-family: var(--main-font) !important;
-	color: var(--main-color);
+	font-family: var(--main-font), sans-serif;
 }
 
 
@@ -65,32 +40,14 @@ body {
 	max-width: var(--max-width);
 }
 
-markdown {
-	color: var(--text-color);
+main, article {
+	color: var(--main-color);
 }
 
-
-ul {
-	padding-left: 1.5em;
+h1 {
+	border-bottom: solid thin var(--accent-color);
+	text-align: center;
 }
-
-
-fieldset>label {
-	display: inline-flex;
-	flex-direction: column;
-	max-width: var(--input-width);
-	margin: 0.5em 1em;
-	color: var(--accent-color); 
-}
-
-label>input {
-	width: 100%;
-}
-
-label {
-	color: var(--accent-color)
-}
-
 
 menu {
 	display: flex;
@@ -98,38 +55,24 @@ menu {
 }
 
 
-fieldset {
-	border: outset thin;
+a {
+	text-decoration: none;
+	background-color: var(--highlighter);
+	cursor: pointer;
 }
 
-form input {
-	max-width: var(--input-width);
-}
-
-
-code {
-	font-family: var(--code-font) !important;
-	word-break: break-all !important;
+mark {
+	background-color: var(--highlighter);
 }
 
 
-h1 {
-	text-align: center;
-	font-size: larger;
+code, pre {
+	font-family: var(--code-font), monospace;
+	word-break: break-all;
+	background-color: var(--highlighter);
 }
 
-h2,h3 {
-	font-size: larger;
-}
 
-h2, h3, h4, h5, h6, p {
-	display: inline;
-}
-
-h2::before, h3::before, h4::before, h5::before, h6::before {
-	content: "\a";
-	white-space: pre;
-}
 
 icon {
 	padding-left: 5px;
@@ -142,13 +85,59 @@ icon:hover {
 	cursor: pointer;
 }
 
-a {
-	text-decoration: none;
-	background-color: var(--highlighter);
-	cursor: pointer;
+
+
+ul {
+	padding-left: 1.5em;
 }
 
-code {
-	background-color: var(--highlighter);
+
+fieldset {
+	border: outset thin;
 }
+
+fieldset>label {
+	display: inline-flex;
+	flex-direction: column;
+	max-width: var(--input-width);
+	margin: 0.5em 1em;
+	color: var(--accent-color); 
+}
+
+button {
+	font-size: medium;
+	border: outset;
+	margin: 0 .5em;
+	padding: .5em;
+}
+
+label {
+	color: var(--accent-color)
+}
+
+label>input {
+	width: 100%;
+}
+
+input:required {
+	border-color: var(--highlighter);
+}
+
+form input {
+	max-width: var(--input-width);
+}
+
+
+
+modal {
+	position: fixed;
+	border: solid;
+	background-color: var(--popup-color);
+	padding: 1em;
+}
+
+form {
+	margin: 1em 0;
+}
+
 

@@ -7,6 +7,8 @@ This js library adds api-fetcher to your documentation to test and fetch api by 
 
 ## how to use
 
+copy yaad/src to your static folder 
+
 
 ```html
 
