@@ -14,14 +14,18 @@
 	<main>
 		<api-fetcher></api-fetcher>
 
-		<mark-down src="../test/to-do.md" class="language-js"></mark-down>
 		<mark-down src="../README.md" class="language-js"></mark-down>
+		<mark-down src="../test/to-do.md" class="language-js"></mark-down>
 		
 	</main>
 </body>
 
+
 <link rel="stylesheet" href = "./index.css">
-<script src="index.js" type="module"></script>
+<script type="module">
+	import {initiate} from "./index.js"
+	initiate() // you can overwrite defualt values like initiate({expandableSelector: 'main'})
+</script>
 
 <style>
 	:root{

@@ -63,12 +63,18 @@ a {
 
 mark {
 	background-color: var(--highlighter);
+	color: var(--accent-color);
 }
 
 
-code, pre {
+code {
 	font-family: var(--code-font), monospace;
 	word-break: break-all;
+	background-color: var(--highlighter);
+	white-space: pre-wrap;
+}
+
+pre {
 	background-color: var(--highlighter);
 }
 

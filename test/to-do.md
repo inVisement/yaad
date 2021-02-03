@@ -1,4 +1,4 @@
-# Title
+# Example Markdwon Document
 
 ## APIs
 - example1: `GET,POST /api/endpoints/{endpoint}?user=&size=10&output?pass:password=&file:file=&complete=true`
@@ -43,8 +43,3 @@
     - implement data type for parameters (query and body) 
 
 
-## bugs    
-
-- run f only after all markdowns are converted
-- add expandable class to icons and change select them
-- add console.table to viewer

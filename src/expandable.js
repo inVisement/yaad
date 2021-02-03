@@ -1,7 +1,7 @@
 
 
 
-export function makeHeadersExpandable(el, headers=['H2', 'H3', 'H4'], openDepth=5) {
+export function makeHeadersExpandable(el, headers=['H2', 'H3', 'H4'], openDepth=0) {
 	const allHeaders = ['H1', 'H2', 'H3', 'H4', 'H5', 'H6']
 	
 	let openDetailsCloner = document.createElement('details')
