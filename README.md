@@ -7,12 +7,15 @@ This js library:
 - makes your page expandable when clicking on h1-h4 (configurable)
 - adds api-fetcher to your documentation to test and fetch api calls by clicking on links
 
-I often struggles with easy documentation of APIs that we develop, so I developed this little helper. If you embrace eXtreme Programming, this library helps you to focus on your code and markdown. 
+I often struggle with easy documentation of APIs that we develop, so I developed this little helper. If you embrace eXtreme Programming, this library helps you to focus on your code and markdown. 
+
+Example: this repo's pages (https://invisement.github.io/yaad/src/) are created by itself with no jenkin, static generator. Just following the below. 
 
 ## how to install
 
 following example shows how to use:
 
+index.html:
 ```html
 
 <!doctype html>
@@ -31,8 +34,8 @@ following example shows how to use:
 	<main>
 		<api-fetcher></api-fetcher> <!--- necessary to initiate api fetcher --->
 
-		<mark-down src="../test/to-do.md"></mark-down> <!--- src point to your markdown file --->
-		<mark-down src="../README.md" class="language-js"></mark-down> <!--- optionally you can add language for syntax highlighting --->
+		<mark-down src="./test/to-do.md"></mark-down> <!--- src point to your markdown file --->
+		<mark-down src="./README.md" class="language-js"></mark-down> <!--- optionally you can add language for syntax highlighting --->
 		
 	</main>
 </body>
@@ -60,6 +63,12 @@ following example shows how to use:
 </html>
 
 ```
+
+The above link uses jsdelivr to link to this library. Alternatively, you can save the content of `src/` to your static directory and link from your own static directoy. Alternatively (and better way), you can link to static pages:
+- https://invisement.github.io/yaad/src/index.js
+- https://invisement.github.io/yaad/src/index.css
+which are cdn and can handle huge loads.
+
 
 ## Tweek css options
 If you like to have a different style and look, change css variables in your `<style>` tag. Below is the default values:
