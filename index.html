@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	
+	<meta charset="utf-8"/>
+	<title>yaad</title>
+	<meta name="description" content="yet another api documentation">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+</head>
+
+<body>
+	<main>
+		<api-fetcher></api-fetcher>
+
+		<mark-down src="./README.md" class="language-js"></mark-down>
+		<mark-down src="./test/to-do.md" class="language-js"></mark-down>
+		
+	</main>
+</body>
+
+
+<link rel="stylesheet" href = "./src/index.css">
+<script type="module">
+	import {initiate} from "./src/index.js"
+	initiate() // you can overwrite defualt values like initiate({expandableSelector: 'main'})
+</script>
+
+<style>
+	:root{
+		--hue: 320; /*magenta*/
+	}
+</style>
+
+</html>

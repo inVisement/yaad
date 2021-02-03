@@ -119,6 +119,7 @@ For query parameters and body parameters:
 
 ## future features
 - [X] add how to use and how to install
+- [ ] add demo website
 - [ ] add header options to api calls
 - [ ] add minify for js and css files
 
